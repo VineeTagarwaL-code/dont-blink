@@ -28,9 +28,9 @@ func (c *Client) Read() {
 	for {
 		_, payload, err := c.Conn.ReadMessage()
 		if err != nil {
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				c.manager.unregister <- c
-			}
+
+			c.manager.unregister <- c
+
 			break
 		}
 		partner, paired := c.manager.paired[c]

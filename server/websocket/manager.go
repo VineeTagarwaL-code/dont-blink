@@ -68,7 +68,7 @@ func (m *Manager) handleRegistration(client *Client) {
 
 	// add the client in the map of clients first
 	m.clients[client] = true
-
+	log.Println(m.clients)
 	if len(m.waiting) > 0 {
 		partner := m.waiting[0]
 		m.waiting = m.waiting[1:]
@@ -78,6 +78,7 @@ func (m *Manager) handleRegistration(client *Client) {
 		// Add the client to the waiting queue if no partner is available
 		m.waiting = append(m.waiting, client)
 	}
+	log.Println(m.clients)
 
 }
 
