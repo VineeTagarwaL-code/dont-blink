@@ -9,6 +9,7 @@ import (
 
 func SetupRouter(r *gin.Engine) {
 	wsManger := websocket.NewManager()
+	go wsManger.Start()
 	r.GET("/health", handlers.Health)
 	r.GET("/ws", wsManger.ServeWS)
 }

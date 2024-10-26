@@ -1,8 +1,6 @@
 package websocket
 
 import (
-	"server/utils"
-
 	"github.com/gorilla/websocket"
 )
 
@@ -31,12 +29,13 @@ func (c *Client) Read() {
 		_, payload, err := c.Conn.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				utils.PrintError("WEBSOCKET CONNECTION | error reading message")
+				c.manager.unregister <- c
 			}
 			break
 		}
-		for wsClient := range c.manager.clients {
-			wsClient.egress <- payload
+		partner, paired := c.manager.paired[c]
+		if paired {
+			partner.egress <- payload
 		}
 
 	}
