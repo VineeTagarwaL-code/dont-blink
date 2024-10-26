@@ -1,0 +1,6 @@
+.env
+dist
+*lock.json
+bun.lockb
+
+
